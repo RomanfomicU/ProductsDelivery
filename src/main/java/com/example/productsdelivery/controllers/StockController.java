@@ -1,9 +1,7 @@
 package com.example.productsdelivery.controllers;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.example.productsdelivery.exceptions.notFoundException;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -13,7 +11,8 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/stocks")
 public class StockController {
-    public List<Map<String, String>> stocks = new ArrayList<Map<String, String>>() {{
+    private int counter = 4;
+    private List<Map<String, String>> stocks = new ArrayList<Map<String, String>>() {{
         add(new HashMap<String, String>() {{
             put("id", "1"); put("status", "open"); put("open_time", "8:00"); put("close_time", "22:00");
         }});
@@ -25,16 +24,37 @@ public class StockController {
         }});
     }};
 
+
+    private Map<String, String> getStockById(@PathVariable String id) {
+        return stocks.stream()
+                .filter(stocks ->stocks.get("id").equals(id))
+                .findFirst()
+                .orElseThrow(notFoundException::new);
+    }
     @GetMapping
     public List<Map<String, String>> list() {
         return stocks;
     }
-
     @GetMapping("{id}")
     public Map<String, String> getStock(@PathVariable String id) {
-        return stocks.stream()
-                .filter(stocks ->stocks.get("id").equals(id))
-                .findFirst()
-                .orElseThrow();
+        return getStockById(id);
+    }
+    @PostMapping
+    public Map<String, String> createStock(@RequestBody Map<String, String> stock) {
+        stock.put("id", String.valueOf(counter++));
+        stocks.add(stock);
+        return stock;
+    }
+    @PutMapping("{id}")
+    public Map<String, String> updateStock(@PathVariable String id, @RequestBody Map<String, String> newStock) {
+        Map<String, String> stock = getStockById(id);
+        stock.putAll(newStock);
+        stock.put("id", id);
+        return stock;
+    }
+    @DeleteMapping("{id}")
+    public void deleteStock(@PathVariable String id) {
+        Map<String, String> stock = getStockById(id);
+        stocks.remove(stock);
     }
 }
