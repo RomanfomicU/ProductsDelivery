@@ -15,8 +15,7 @@ CREATE TABLE users (
     status VARCHAR(255) NOT NULL,
     phone VARCHAR(20) NOT NULL,
     password VARCHAR(255) NOT NULL,
-    id_role INT REFERENCES roles(id),
-    id_stock INT REFERENCES stocks(id)
+    id_role INT REFERENCES roles(id)
 );
 CREATE TABLE orders (
      id SERIAL PRIMARY KEY,
