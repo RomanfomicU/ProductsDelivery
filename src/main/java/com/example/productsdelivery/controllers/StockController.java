@@ -15,7 +15,7 @@ public class StockController {
     private StockRepo stockRepo;
 
     @GetMapping
-    public List<StockModel> list() {
+    public List<StockModel> getStockList() {
         return stockRepo.findAll();
     }
     @GetMapping("{id}")
@@ -37,11 +37,11 @@ public class StockController {
         if (stock.getAddress() != null) {
             newStock.setAddress(stock.getAddress());
         }
-        if (stock.getOpen_time() != null) {
-            newStock.setOpen_time(stock.getOpen_time());
+        if (stock.getOpenTime() != null) {
+            newStock.setOpenTime(stock.getOpenTime());
         }
-        if (stock.getClose_time() != null) {
-            newStock.setClose_time(stock.getClose_time());
+        if (stock.getCloseTime() != null) {
+            newStock.setCloseTime(stock.getCloseTime());
         }
         newStock.setId(Integer.valueOf(id));
         stockRepo.save(newStock);

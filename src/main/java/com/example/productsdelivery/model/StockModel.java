@@ -1,12 +1,7 @@
 package com.example.productsdelivery.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.springframework.cglib.core.Local;
-
-import java.sql.Timestamp;
 import java.time.LocalTime;
 
 @Data
@@ -24,9 +19,9 @@ public class StockModel {
     private String address;
 
     @Column(name = "open_time")
-    private LocalTime open_time;
+    private LocalTime openTime;
 
     @Column(name = "close_time")
-    private LocalTime close_time;
+    private LocalTime closeTime;
 
 }
