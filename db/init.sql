@@ -7,8 +7,8 @@ CREATE TABLE stocks (
    id SERIAL PRIMARY KEY,
    status VARCHAR(255) NOT NULL,
    address VARCHAR(255) NOT NULL,
-   open_time TIMESTAMP NOT NULL,
-   close_time TIMESTAMP NOT NULL
+   open_time TIME NOT NULL,
+   close_time TIME NOT NULL
 );
 CREATE TABLE users (
     id SERIAL PRIMARY KEY,

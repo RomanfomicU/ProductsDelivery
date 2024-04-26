@@ -5,9 +5,9 @@ INSERT INTO roles (name)
 VALUES ('User'), ('Courier'), ('Admin');
 
 INSERT INTO stocks (status, address, open_time, close_time)
-VALUES ('Open', 'Point A', '2024-04-26 08:00:00', '2024-04-26 18:00:00'),
-       ('Closed', 'Point C', '2024-04-26 09:00:00', '2024-04-26 17:00:00'),
-       ('Open', 'Point E', '2024-04-26 09:00:00', '2024-04-26 17:00:00');
+VALUES ('Open', 'Point A', '08:00:00', '18:00:00'),
+       ('Closed', 'Point C', '09:00:00', '17:00:00'),
+       ('Open', 'Point E', '09:00:00', '17:00:00');
 
 INSERT INTO users (status, phone, password, id_role, id_stock)
 VALUES ('Active', '1234567890', 'password123', 1, 1),
