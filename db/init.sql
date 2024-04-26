@@ -6,6 +6,7 @@ CREATE TABLE roles (
 CREATE TABLE stocks (
    id SERIAL PRIMARY KEY,
    status VARCHAR(255) NOT NULL,
+   address VARCHAR(255) NOT NULL,
    open_time TIMESTAMP NOT NULL,
    close_time TIMESTAMP NOT NULL
 );
@@ -20,7 +21,6 @@ CREATE TABLE users (
 CREATE TABLE orders (
      id SERIAL PRIMARY KEY,
      status VARCHAR(255) NOT NULL,
-     start_point VARCHAR(255) NOT NULL,
      end_point VARCHAR(255) NOT NULL,
      id_user INT REFERENCES users (id),
      id_courier INT REFERENCES users(id),
