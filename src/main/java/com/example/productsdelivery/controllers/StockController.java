@@ -1,6 +1,5 @@
 package com.example.productsdelivery.controllers;
 
-import com.example.productsdelivery.exceptions.notFoundException;
 import com.example.productsdelivery.model.StockModel;
 import com.example.productsdelivery.repo.StockRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +11,6 @@ import java.util.*;
 @RestController
 @RequestMapping("/api/stocks")
 public class StockController {
-    private int counter = 4;
     @Autowired
     private StockRepo stockRepo;
 
@@ -24,22 +22,33 @@ public class StockController {
     public Optional<StockModel> getStock(@PathVariable String id) {
         return stockRepo.findById(Integer.valueOf(id));
     }
-    /*@PostMapping
-    public Map<String, String> createStock(@RequestBody Map<String, String> stock) {
-        stock.put("id", String.valueOf(counter++));
-        stocks.add(stock);
-        return stock;
+    @PostMapping
+    public StockModel createStock(@RequestBody StockModel stock) {
+        StockModel newStock = stockRepo.save(stock);
+        return newStock;
     }
     @PutMapping("{id}")
-    public Map<String, String> updateStock(@PathVariable String id, @RequestBody Map<String, String> newStock) {
-        Map<String, String> stock = getStockById(id);
-        stock.putAll(newStock);
-        stock.put("id", id);
-        return stock;
+    public StockModel updateStock(@PathVariable String id, @RequestBody StockModel stock) {
+        StockModel newStock = stockRepo.findById(Integer.valueOf(id)).orElse(null);
+        if(newStock == null) return null;
+        if (stock.getStatus() != null) {
+            newStock.setStatus(stock.getStatus());
+        }
+        if (stock.getAddress() != null) {
+            newStock.setAddress(stock.getAddress());
+        }
+        if (stock.getOpen_time() != null) {
+            newStock.setOpen_time(stock.getOpen_time());
+        }
+        if (stock.getClose_time() != null) {
+            newStock.setClose_time(stock.getClose_time());
+        }
+        newStock.setId(Integer.valueOf(id));
+        stockRepo.save(newStock);
+        return newStock;
     }
     @DeleteMapping("{id}")
     public void deleteStock(@PathVariable String id) {
-        Map<String, String> stock = getStockById(id);
-        stocks.remove(stock);
-    }*/
+        stockRepo.deleteById(Integer.valueOf(id));
+    }
 }
