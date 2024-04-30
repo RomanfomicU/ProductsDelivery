@@ -2,18 +2,24 @@ package com.example.productsdelivery.controllers;
 
 import com.example.productsdelivery.model.UserModel;
 import com.example.productsdelivery.repo.UserRepo;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 
 @RestController
 @RequestMapping("/api/users")
+@AllArgsConstructor
 public class UserController {
     @Autowired
     private UserRepo userRepo;
+    private PasswordEncoder passwordEncoder;
 
     @GetMapping
+    @PreAuthorize("hasAuthority('3')")
     public List<UserModel> getUserList() {
         return userRepo.findAll();
     }
@@ -25,6 +31,7 @@ public class UserController {
 
     @PostMapping
     public UserModel createUser(@RequestBody UserModel user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         UserModel newUser = userRepo.save(user);
         return newUser;
     }
@@ -54,4 +61,5 @@ public class UserController {
     public void deleteUser(@PathVariable String id) {
         userRepo.deleteById(Integer.valueOf(id));
     }
+
 }
