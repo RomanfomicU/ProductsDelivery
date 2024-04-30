@@ -33,8 +33,8 @@ public class UserController {
     public UserModel updateUser(@PathVariable String id, @RequestBody UserModel user) {
         UserModel newUser = userRepo.findById(Integer.valueOf(id)).orElse(null);
         if(newUser == null) return null;
-        if (user.getStatus() != null) {
-            newUser.setStatus(user.getStatus());
+        if (user.getUsername() != null) {
+            newUser.setUsername(user.getUsername());
         }
         if (user.getPhone() != null) {
             newUser.setPhone(user.getPhone());

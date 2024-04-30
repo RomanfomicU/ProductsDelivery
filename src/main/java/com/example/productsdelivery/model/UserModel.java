@@ -11,8 +11,8 @@ public class UserModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "status")
-    private String status;
+    @Column(name = "username")
+    private String username;
 
     @Column(name = "phone")
     private String phone;
