@@ -58,6 +58,7 @@ public class UserController {
     }
 
     @DeleteMapping("{id}")
+    @PreAuthorize("hasAuthority('3')")
     public void deleteUser(@PathVariable String id) {
         userRepo.deleteById(Integer.valueOf(id));
     }

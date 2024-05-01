@@ -15,22 +15,26 @@ public class OrderController {
     private OrderRepo orderRepo;
 
     @GetMapping
+    @PreAuthorize("hasAuthority('3') && hasAuthority('2')")
     public List<OrderModel> getOrderList() {
         return orderRepo.findAll();
     }
 
     @GetMapping("{id}")
+    @PreAuthorize("hasAuthority('3') && hasAuthority('2') && hasAuthority('1')")
     public Optional<OrderModel> getOrder(@PathVariable String id) {
         return orderRepo.findById(Integer.valueOf(id));
     }
 
     @PostMapping
+    @PreAuthorize("hasAuthority('3') && hasAuthority('1')")
     public OrderModel createOrder(@RequestBody OrderModel order) {
         OrderModel newOrder = orderRepo.save(order);
         return newOrder;
     }
 
     @PutMapping("{id}")
+    @PreAuthorize("hasAuthority('3')")
     public OrderModel updateOrder(@PathVariable String id, @RequestBody OrderModel order) {
         OrderModel newOrder = orderRepo.findById(Integer.valueOf(id)).orElse(null);
         if(newOrder == null) return null;
@@ -55,6 +59,7 @@ public class OrderController {
     }
 
     @DeleteMapping("{id}")
+    @PreAuthorize("hasAuthority('3') && hasAuthority('2') && hasAuthority('1')")
     public void deleteOrder(@PathVariable String id) {
         orderRepo.deleteById(Integer.valueOf(id));
     }
