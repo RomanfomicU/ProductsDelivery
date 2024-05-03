@@ -1,5 +1,6 @@
 package com.example.productsdelivery.controllers;
 
+import com.example.productsdelivery.config.UserCredentials;
 import com.example.productsdelivery.model.UserModel;
 import com.example.productsdelivery.repo.UserRepo;
 import lombok.AllArgsConstructor;
@@ -27,6 +28,15 @@ public class UserController {
     @GetMapping("{id}")
     public Optional<UserModel> getUser(@PathVariable String id) {
         return userRepo.findById(Integer.valueOf(id));
+    }
+
+    @PostMapping("/login")
+    public String loginUser(@RequestBody UserCredentials userCredentials){
+        UserModel user = userRepo.findByUsername(userCredentials.getLogin()).orElse(null);
+        if (user != null && passwordEncoder.matches(userCredentials.getPassword(), user.getPassword())) {
+            return "True";
+        }
+        return "False";
     }
 
     @PostMapping
