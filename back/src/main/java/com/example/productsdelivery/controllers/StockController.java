@@ -16,12 +16,12 @@ public class StockController {
     private StockRepo stockRepo;
 
     @GetMapping
-    @PreAuthorize("hasAuthority('3') && hasAuthority('2')")
+    @PreAuthorize("hasAuthority('3') || hasAuthority('2')")
     public List<StockModel> getStockList() {
         return stockRepo.findAll();
     }
     @GetMapping("{id}")
-    @PreAuthorize("hasAuthority('3') && hasAuthority('2')")
+    @PreAuthorize("hasAuthority('3') || hasAuthority('2')")
     public Optional<StockModel> getStock(@PathVariable String id) {
         return stockRepo.findById(Integer.valueOf(id));
     }
