@@ -26,6 +26,7 @@ public class UserController {
     }
 
     @GetMapping("{id}")
+    @PreAuthorize("hasAuthority('3') || hasAuthority('2') || hasAuthority('1')")
     public Optional<UserModel> getUser(@PathVariable String id) {
         return userRepo.findById(Integer.valueOf(id));
     }
@@ -34,7 +35,7 @@ public class UserController {
     public String loginUser(@RequestBody UserCredentials userCredentials){
         UserModel user = userRepo.findByUsername(userCredentials.getLogin()).orElse(null);
         if (user != null && passwordEncoder.matches(userCredentials.getPassword(), user.getPassword())) {
-            return "True";
+            return user.getId().toString();
         }
         return "False";
     }
@@ -47,6 +48,7 @@ public class UserController {
     }
 
     @PutMapping("{id}")
+    @PreAuthorize("hasAuthority('3') || hasAuthority('2') || hasAuthority('1')")
     public UserModel updateUser(@PathVariable String id, @RequestBody UserModel user) {
         UserModel newUser = userRepo.findById(Integer.valueOf(id)).orElse(null);
         if(newUser == null) return null;

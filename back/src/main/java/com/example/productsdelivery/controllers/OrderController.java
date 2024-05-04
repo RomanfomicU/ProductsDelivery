@@ -20,6 +20,12 @@ public class OrderController {
         return orderRepo.findAll();
     }
 
+    @GetMapping("/user/{id}")
+    @PreAuthorize("hasAuthority('3') || hasAuthority('1')")
+    public List<OrderModel> gerUserOrders(@PathVariable String id) {
+        return orderRepo.findByIdUser(Integer.valueOf(id));
+    }
+
     @GetMapping("{id}")
     @PreAuthorize("hasAuthority('3') || hasAuthority('2') || hasAuthority('1')")
     public Optional<OrderModel> getOrder(@PathVariable String id) {
