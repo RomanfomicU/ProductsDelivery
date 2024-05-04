@@ -24,6 +24,8 @@
 
     const logout = () => {
         $cookies.remove('username');
+        $cookies.remove('password');
+        $cookies.remove('id');
         user.value = '';
         router.push('/')
     }

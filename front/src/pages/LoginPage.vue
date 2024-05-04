@@ -1,11 +1,11 @@
 <template>
     <div>
-        <form class="login-form" @submit.prevent="login" v-if="responseData !== 'True'">
+        <form class="login-form" @submit.prevent="login" v-if="responseData === 'False' ||responseData === null">
             <input class="login-el" type="text" v-model="username" placeholder="Логин">
             <input class="login-el" type="password" v-model="password" placeholder="Пароль">
             <button class="login-el" type="submit">Войти</button>
         </form>
-        <div class="msg-login" id="msg-login-success" v-if="responseData === 'True'">
+        <div class="msg-login" id="msg-login-success" v-if="responseData !== null && responseData !== 'False'">
             Авторизация пройдена успешно!
         </div>
         <div class="msg-login" id="msg-login-error" v-else-if="responseData === 'False'">
@@ -31,9 +31,10 @@
                     password: password.value
             });
             responseData.value = response.data;
-            if(responseData.value === "True") {
+            if(responseData.value !== "False") {
                 $cookies.set('username', username);
                 $cookies.set('password', password);
+                $cookies.set('id', responseData.value);
                 window.location.reload();
             }
         } catch (error) {
