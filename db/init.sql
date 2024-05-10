@@ -40,6 +40,8 @@ VALUES ('user', '1234567890', '$2a$10$56To3mrRW8EP4sQvCNFa5OrmuMYL9LIqQTBKhPzp5z
        ('admin', '0987654321', '$2a$10$kGaUEKvburba4odRLP3lOuZEP1NGZKWl.R2WWKplMHcQT9BQrH5I.', 3);
 
 INSERT INTO orders (status, end_point, id_user, id_courier, id_stock)
-VALUES ('Pending', 'Point B', 1, NULL, 1),
+VALUES ('Pending', 'Point B', 1, 2, 1),
        ('Delivered', 'Point D', 1, 2, 1),
-       ('Pending', 'Point F', 3, NULL, 2);
+       ('Created', 'Point D', 1, NULL, 2),
+       ('Delivered', 'Point D', 1, 2, 2),
+       ('Created', 'Point F', 3, NULL, 2);
