@@ -16,13 +16,14 @@
         </div>
         <div class="user-orders" v-if="userOrders">
             <div class="user-orders-title">
-                Заказы
+                История заказов
             </div>
             <div class="user-orders-body">
                 <div class="user-order-body" v-for="order in userOrders">
                     <div class="user-order-id">#{{ order.id }}</div>
                     <div class="user-order-status pending" v-if="order.status === 'Pending'">В пути</div>
                     <div class="user-order-status delivered" v-if="order.status === 'Delivered'">Доставлен</div>
+                    <div class="user-order-status" v-if="order.status === 'Created'">Создан</div>
                 </div>
             </div>
         </div>
@@ -56,6 +57,9 @@
             userData.value = response.data;
         } catch (error) {
             console.error('The request failed: ', error);
+        }
+        if (id.value == 2) {
+            return;
         }
         try {
             const response = await axios.get('http://localhost:8081/api/orders/user/' + id.value, {
