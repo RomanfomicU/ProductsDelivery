@@ -26,15 +26,57 @@ public class OrderController {
         return orderRepo.findByIdUser(Integer.valueOf(id));
     }
 
+    @GetMapping("/courier/{id}")
+    @PreAuthorize("hasAuthority('3') || hasAuthority('2')")
+    public List<OrderModel> gerCourierOrders(@PathVariable String id) {
+        List<OrderModel> orders = orderRepo.findByIdCourier(Integer.valueOf(id));
+        List<OrderModel> createdOrders = orderRepo.findByStatus("Created");
+        orders.addAll(createdOrders);
+        return orders;
+    }
+
     @GetMapping("{id}")
     @PreAuthorize("hasAuthority('3') || hasAuthority('2') || hasAuthority('1')")
     public Optional<OrderModel> getOrder(@PathVariable String id) {
         return orderRepo.findById(Integer.valueOf(id));
     }
 
+    @GetMapping("/take/{idOrder}/{idCourier}")
+    @PreAuthorize("hasAuthority('3') || hasAuthority('2')")
+    public OrderModel takeOrder(@PathVariable String idOrder, @PathVariable String idCourier) {
+        OrderModel order = orderRepo.findById(Integer.valueOf(idOrder)).orElse(null);
+        if (order == null) {
+            return null;
+        }
+        order.setStatus("Pending");
+        order.setIdCourier(Integer.valueOf(idCourier));
+        return orderRepo.save(order);
+    }
+
+    @GetMapping("/finish/{id}")
+    @PreAuthorize("hasAuthority('3') || hasAuthority('2')")
+    public OrderModel finishOrder(@PathVariable String id) {
+        OrderModel order = orderRepo.findById(Integer.valueOf(id)).orElse(null);
+        if (order == null) {
+            return null;
+        }
+        order.setStatus("Delivered");
+        return orderRepo.save(order);
+    }
+
     @PostMapping
     @PreAuthorize("hasAuthority('3') || hasAuthority('1')")
     public OrderModel createOrder(@RequestBody OrderModel order) {
+        if (order.getStatus() == null) {
+            order.setStatus("Created");
+        }
+        if (order.getEndPoint() == null) {
+            order.setEndPoint("-");
+        }
+        if (order.getIdStock() == null) {
+            order.setIdStock(1);
+        }
+        order.setIdCourier(null);
         OrderModel newOrder = orderRepo.save(order);
         return newOrder;
     }
