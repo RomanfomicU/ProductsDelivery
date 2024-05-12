@@ -27,5 +27,21 @@ services:
     volumes:
       - ./service/web/src:/var/www/html
 
+  front:
+    container_name: front
+    depends_on:
+      - back
+    build:
+      context: ./front
+      dockerfile: Dockerfile
+    ports:
+      - "3000:5173"
+    volumes:
+      - ./front:/app
+    stdin_open: true
+    tty: true
+    networks:
+      - delivery
+
 networks:
   delivery:
