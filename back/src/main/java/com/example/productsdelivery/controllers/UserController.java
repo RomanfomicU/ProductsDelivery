@@ -41,10 +41,11 @@ public class UserController {
     }
 
     @PostMapping
-    public UserModel createUser(@RequestBody UserModel user) {
+    public String createUser(@RequestBody UserModel user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setIdRole(1);
         UserModel newUser = userRepo.save(user);
-        return newUser;
+        return newUser.getId().toString();
     }
 
     @PutMapping("{id}")
