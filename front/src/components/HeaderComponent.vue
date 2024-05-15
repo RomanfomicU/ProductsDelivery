@@ -5,6 +5,7 @@
                 <router-link class="nav-link" to="/">ProDel</router-link>
             </div>
             <div class="links">
+                <router-link v-if="user && idRole == '3'" class="nav-link" to="/users">Пользователи</router-link>
                 <router-link v-if="user" class="nav-link" to="/order">Заказы</router-link>
                 <router-link v-if="!user" class="nav-link" to="/login">Авторизация</router-link>
                 <router-link v-if="user" class="nav-link" to="/profile">Профиль</router-link>
@@ -17,11 +18,28 @@
 <script setup>
     import { ref, onMounted } from 'vue';
     import { useRouter } from 'vue-router';
+    import axios from "axios";
 
     const user = ref('');
+    const idRole = ref('');
+    const id = ref('');
 
     const router = useRouter();
 
+    const getPermissions = async () => {
+        try {
+            let password = $cookies.get('password')._value;
+            const response = await axios.get('http://localhost:8081/api/users/' + id.value, {
+                auth: {
+                    username: user.value,
+                    password: password
+                }
+            });
+            idRole.value = response.data.idRole;
+        } catch (error) {
+            console.error('The request failed: ', error);
+        }
+    }
     const logout = () => {
         $cookies.remove('username');
         $cookies.remove('password');
@@ -30,8 +48,10 @@
         router.push('/')
     }
     onMounted(() => {
-        if($cookies.get('username')) {
-            user.value = $cookies.get('username')._value
+        if($cookies.get('username') || $cookies.get('password') || $cookies.get('id')) {
+            user.value = $cookies.get('username')._value;
+            id.value = $cookies.get('id');
+            getPermissions();
         }
     })
 </script>

@@ -3,7 +3,8 @@
         <form class="login-form" @submit.prevent="login" v-if="responseData === 'False' ||responseData === null">
             <input class="login-el" type="text" v-model="username" placeholder="Логин">
             <input class="login-el" type="password" v-model="password" placeholder="Пароль">
-            <button class="login-el" type="submit">Войти</button>
+            <button class="login-el login-button" type="submit">Войти</button>
+            <router-link to="/register" class="login-el login-button">Зарегистрироваться</router-link>
         </form>
         <div class="msg-login" id="msg-login-success" v-if="responseData !== null && responseData !== 'False'">
             Авторизация пройдена успешно!
@@ -57,6 +58,7 @@
         align-items: center;
     }
     .login-el {
+        text-decoration: none;
         width: 300px;
         height: 30px;
         display: flex;
@@ -65,7 +67,7 @@
         border: 1px solid grey;
         border-radius: 10px;
     }
-    .login-form button {
+    .login-button {
         background-color: dodgerblue;
         color: white;
         text-align: center;
@@ -75,7 +77,7 @@
         border: none;
         transition: all 0.3s ease;
     }
-    .login-form button:hover {
+    .login-button:hover {
         cursor: pointer;
         transform: scale(1.05);
     }

@@ -30,6 +30,7 @@
                     <div class="user-order-status pending" v-if="order.status === 'Pending'">В пути</div>
                     <div class="user-order-status delivered" v-if="order.status === 'Delivered'">Доставлен</div>
                     <div class="user-order-status delivered" v-if="order.status === 'Created'">Создан</div>
+                    <div class="user-order-status" >{{ order.endPoint }}</div>
                     <button class="courier-button" v-if="order.status === 'Created'" v-on:click="takeOrder(order.id)">Взять</button>
                     <button class="courier-button" v-if="order.status === 'Pending'" v-on:click="finishOrder(order.id)">Завершить</button>
                 </div>
