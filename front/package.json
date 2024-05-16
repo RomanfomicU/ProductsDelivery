@@ -27,7 +27,7 @@
   "overrides": {
     "vite": {
       "rollup": "npm:@rollup/wasm-node",
-      "esbuild": "npm:esbuild-wasm@0.21.2"
+      "esbuild": "npm:esbuild-wasm@0.21.1"
     }
   }
 }
