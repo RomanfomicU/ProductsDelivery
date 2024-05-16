@@ -58,8 +58,9 @@
 </template>
 
 <script setup>
-    import axios from 'axios'
-    import { ref, onMounted } from 'vue'
+    import axios from 'axios';
+    import { ref, onMounted } from 'vue';
+    import { BASE_URL } from '../config';
 
     const username = ref('');
     const password = ref('');
@@ -72,7 +73,7 @@
 
     const getPermissions = async () => {
         try {
-            const response = await axios.get('http://localhost:8081/api/users/' + id.value, {
+            const response = await axios.get(`${BASE_URL}/api/users/${id.value}`, {
                 auth: {
                     username: username.value,
                     password: password.value
@@ -85,7 +86,7 @@
     }
     const getOrders = async () => {
         await getPermissions();
-        let request = 'http://localhost:8081/api/orders';
+        let request = `${BASE_URL}/api/orders`;
         if (idRole.value == 1) {
             request += '/user/' + id.value;
         } else if (idRole.value == 2) {
@@ -111,7 +112,7 @@
     }
     const createOrder = async () => {
         try {
-            const response = await axios.post('http://localhost:8081/api/orders', {
+            const response = await axios.post(`${BASE_URL}/api/orders`, {
                 endPoint: orderAddress.value,
                 idUser: id.value,
                 idStock: orderIdStock.value
@@ -129,7 +130,7 @@
     }
     const takeOrder = async (idOrder) => {
         try {
-            const response = await axios.get(`http://localhost:8081/api/orders/take/${idOrder}/${id.value}`, {
+            const response = await axios.get(`${BASE_URL}/api/orders/take/${idOrder}/${id.value}`, {
                 auth: {
                     username: username.value,
                     password: password.value
@@ -142,7 +143,7 @@
     }
     const finishOrder = async (idOrder) => {
         try {
-            const response = await axios.get(`http://localhost:8081/api/orders/finish/${idOrder}`, {
+            const response = await axios.get(`${BASE_URL}/api/orders/finish/${idOrder}`, {
                 auth: {
                     username: username.value,
                     password: password.value

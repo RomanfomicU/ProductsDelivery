@@ -21,8 +21,9 @@
 </template>
 
 <script setup>
-    import axios from 'axios'
-    import { ref, onMounted } from 'vue'
+    import axios from 'axios';
+    import { ref, onMounted } from 'vue';
+    import { BASE_URL } from '../config';
 
     const username = ref('');
     const password = ref('');
@@ -35,7 +36,7 @@
             return;
         }
         try {
-            const response = await axios.put('http://localhost:8081/api/users/' + userId, {
+            const response = await axios.put(`${BASE_URL}/api/users/${userId}`, {
                 idRole: Number(userIdRole + 1)
             },
                 {
@@ -54,7 +55,7 @@
             return;
         }
         try {
-            const response = await axios.put('http://localhost:8081/api/users/' + userId, {
+            const response = await axios.put(`${BASE_URL}/api/users/${userId}`, {
                     idRole: Number(userIdRole - 1)
                 },
                 {
@@ -71,7 +72,7 @@
 
     const getPermissions = async () => {
         try {
-            const response = await axios.get('http://localhost:8081/api/users/' + id.value, {
+            const response = await axios.get(`${BASE_URL}/api/users/${id.value}`, {
                 auth: {
                     username: username.value,
                     password: password.value
@@ -86,7 +87,7 @@
         await getPermissions();
         if(idRole.value != 3) return;
         try {
-            const response = await axios.get('http://localhost:8081/api/users', {
+            const response = await axios.get(`${BASE_URL}/api/users`, {
                 auth: {
                     username: username.value,
                     password: password.value

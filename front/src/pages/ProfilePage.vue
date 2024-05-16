@@ -31,8 +31,9 @@
 </template>
 
 <script setup>
-    import axios from 'axios'
-    import { ref, onMounted } from 'vue'
+    import axios from 'axios';
+    import { ref, onMounted } from 'vue';
+    import { BASE_URL } from '../config';
 
     const userData = ref(null);
     const userOrders = ref(null);
@@ -48,7 +49,7 @@
         password.value = $cookies.get('password')._value;
         id.value = $cookies.get('id');
         try {
-            const response = await axios.get('http://localhost:8081/api/users/' + id.value, {
+            const response = await axios.get(`${BASE_URL}/api/users/${id.value}`, {
                 auth: {
                     username: username.value,
                     password: password.value
@@ -62,7 +63,7 @@
             return;
         }
         try {
-            const response = await axios.get('http://localhost:8081/api/orders/user/' + id.value, {
+            const response = await axios.get(`${BASE_URL}/api/orders/user/${id.value}`, {
                 auth: {
                     username: username.value,
                     password: password.value

@@ -19,6 +19,7 @@
     import { ref, onMounted } from 'vue';
     import { useRouter } from 'vue-router';
     import axios from "axios";
+    import { BASE_URL } from '../config';
 
     const user = ref('');
     const idRole = ref('');
@@ -29,7 +30,7 @@
     const getPermissions = async () => {
         try {
             let password = $cookies.get('password')._value;
-            const response = await axios.get('http://localhost:8081/api/users/' + id.value, {
+            const response = await axios.get(`${BASE_URL}/api/users/${id.value}`, {
                 auth: {
                     username: user.value,
                     password: password

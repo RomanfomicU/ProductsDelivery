@@ -19,6 +19,7 @@
     import axios from 'axios';
     import { ref, onMounted } from 'vue';
     import { useRouter } from 'vue-router';
+    import { BASE_URL } from '../config';
 
     const router = useRouter();
     const responseData = ref(null);
@@ -28,7 +29,7 @@
 
     const register = async () => {
         try {
-            const response = await axios.post('http://localhost:8081/api/users', {
+            const response = await axios.post(`${BASE_URL}/api/users`, {
                 username: username.value,
                 password: password.value,
                 phone: phone.value
