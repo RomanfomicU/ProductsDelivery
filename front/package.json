@@ -18,7 +18,8 @@
   "devDependencies": {
     "@vitejs/plugin-vue": "^5.0.4",
     "vite": "^5.2.8",
-    "vite-plugin-wasm": "^3.3.0"
+    "vite-plugin-wasm": "^3.3.0",
+    "esbuild-wasm": "0.21.2"
   },
   "optionalDependencies": {
     "@rollup/rollup-linux-x64-gnu": "^4.17.2"
