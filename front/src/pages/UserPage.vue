@@ -13,6 +13,8 @@
                 <div class="user-field">{{ user.username }}</div>
                 <div class="user-field">{{ user.phone }}</div>
                 <div class="user-field">{{ user.idRole }}</div>
+                <button v-on:click="roleUp(user.id, user.idRole)">+</button>
+                <button v-on:click="roleDown(user.id, user.idRole)">-</button>
             </div>
         </div>
     </div>
@@ -28,6 +30,44 @@
     const id = ref('');
     const usersData = ref(null);
 
+    const roleUp =  async (userId, userIdRole) => {
+        if (userIdRole == 3) {
+            return;
+        }
+        try {
+            const response = await axios.put('http://localhost:8081/api/users/' + userId, {
+                idRole: Number(userIdRole + 1)
+            },
+                {
+                auth: {
+                    username: username.value,
+                    password: password.value
+                }
+            });
+            window.location.reload();
+        } catch (error) {
+            console.error('The request failed: ', error);
+        }
+    }
+    const roleDown =  async (userId, userIdRole) => {
+        if (userIdRole == 1) {
+            return;
+        }
+        try {
+            const response = await axios.put('http://localhost:8081/api/users/' + userId, {
+                    idRole: Number(userIdRole - 1)
+                },
+                {
+                    auth: {
+                        username: username.value,
+                        password: password.value
+                    }
+                });
+            window.location.reload();
+        } catch (error) {
+            console.error('The request failed: ', error);
+        }
+    }
 
     const getPermissions = async () => {
         try {
