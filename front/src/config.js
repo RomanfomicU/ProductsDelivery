@@ -1,2 +1,2 @@
-export const BASE_URL = 'http://10.131.0.12:8081';
+export const BASE_URL = 'http://158.160.128.168';
 //http://localhost:8081
